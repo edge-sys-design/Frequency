@@ -1,0 +1,5 @@
+scalaVersion := "2.10.0-RC3"
+
+scalacOptions ++= Seq("-deprecation", "-feature")
+
+libraryDependencies += "org.scalatest" % "scalatest_2.10.0-RC3" % "1.8-B1" % "test"
