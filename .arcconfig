@@ -1,5 +1,5 @@
 {
-  "project_id" : "Simple Radio App",
+  "project_id" : "Frequency",
   "conduit_uri" : "https://phabricator.edgesysdesign.com/api/",
   "lint.engine" : "SimpleRadioLinters",
   "phutil_libraries" : {
