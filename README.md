@@ -20,6 +20,8 @@ callingFrequency.band // => Some(2m)
 Note that `.band` above is likely to change, as we try to make this library not
 so ham radio specific.
 
+### Creating a `Frequency`
+
 `Frequency` objects can be created in all of the following ways:
 
 ```scala
@@ -36,12 +38,21 @@ new Frequency(146520000) // Hz
 
 # Planned
 
+### `Wavelength` class
+
 ```scala
 import language.postfixOps
 val band = 2 meters // Creates a Wavelength object.
 band contains(146.52 MHz) // true
 
 (146.520 MHz) band // Wavelength(2m)
+```
+
+### Adding/Subtracting `Frequency` instances
+
+```scala
+import language.postfixOps
+(146.52 MHz) + (1 MHz) // Frequency(147.52 MHz)
 ```
 
 # License
