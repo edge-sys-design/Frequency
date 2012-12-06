@@ -31,7 +31,7 @@ import language.postfixOps
 14.325 MHz
 14325000 Hz // 14.325.000 MHz
 new Frequency("146.520.000") // MHz
-new Frequency(146520000") // Hz
+new Frequency(146520000) // Hz
 ```
 
 # Planned
