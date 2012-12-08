@@ -25,6 +25,7 @@ class FrequencySpecs extends FunSpec with ShouldMatchers with BeforeAndAfter {
       new Frequency("14.300.00").Hz should be === 14300000
       new Frequency("14.300.000").Hz should be === 14300000
       new Frequency("146.52").Hz should be === 146520000
+      (10.KHz).Hz should be === 10000
     }
 
     it("should throw IllegalArgumentException when given letters in any format") {

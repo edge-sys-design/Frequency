@@ -108,7 +108,8 @@ object Frequency {
     * @return The frequency in Hertz.
     */
   def toHz(frequency: String): Long = {
-    val frequencySplit: List[Long] = frequency.split("\\.").toList.map(segment =>
+    val frequencyStringSplit: List[String] = frequency.split("\\.").toList
+    val frequencySplit: List[Long] = frequencyStringSplit.map(segment =>
       segment match {
         case "" => 0
         case x => {
@@ -130,16 +131,16 @@ object Frequency {
         (frequencySplit.head * 1000000) +
         (frequencySplit(1) * 1000 * math.pow(
           10,
-          3 - (frequencySplit(1).toString.size)).toLong)
+          3 - (frequencyStringSplit(1).toString.size)).toLong)
       }
       case 3 => {
         (frequencySplit.head * 1000000) +
         (frequencySplit(1) * 1000 * math.pow(
           10,
-          3 - (frequencySplit(1).toString.size)).toLong) +
+          3 - (frequencyStringSplit(1).toString.size)).toLong) +
         (frequencySplit(2) * math.pow(
           10,
-          3 - (frequencySplit(2).toString.size)).toLong)
+          3 - (frequencyStringSplit(2).toString.size)).toLong)
       }
     }
   }
