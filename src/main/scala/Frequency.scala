@@ -80,6 +80,12 @@ class Frequency(val frequency: String) {
       case _ => None
     }
   }
+
+  /** Add two Frequency instances, returning a new Frequency. */
+  def +(that: Frequency) = new Frequency(Hz + that.Hz)
+
+  /** Subtract two Frequency instances, returning a new Frequency. */
+  def -(that: Frequency) = new Frequency(Hz - that.Hz)
 }
 
 object Frequency {

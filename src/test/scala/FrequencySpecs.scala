@@ -47,6 +47,16 @@ class FrequencySpecs extends FunSpec with ShouldMatchers with BeforeAndAfter {
       Frequency.toMHz(1465200) should be === "1.465.200"
     }
 
+    it("should add frequencies together") {
+      ((146.520 MHz) + (10 KHz)).frequency should be === "146.530.000"
+      ((1 MHz) + (10 KHz)).frequency should be === "1.010.000"
+    }
+
+    it("should subtract frequencies from each other") {
+      ((146.520 MHz) - (10 KHz)).frequency should be === "146.510.000"
+      ((1 MHz) - (10 KHz)).frequency should be === "0.990.000"
+    }
+
     it("should handle conversions from and to hertz and megahertz repeatedly") {
       Frequency.toMHz(new Frequency("146.52").Hz) should be === "146.520.000"
       Frequency.toHz(new Frequency(146520000).MHz) should be === 146520000
