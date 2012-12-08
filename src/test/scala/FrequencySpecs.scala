@@ -8,7 +8,7 @@ import org.scalatest.BeforeAndAfter
 class FrequencySpecs extends FunSpec with ShouldMatchers with BeforeAndAfter {
   describe("The Frequency library's implicits") {
     it("should convert Long, String, and Int to Frequency instances") {
-      146520.KHz.toString should be === "146.520.000"
+      146520.kHz.toString should be === "146.520.000"
       146520000.Hz.toString should be === "146.520.000"
       146.MHz.toString should be === "146.000.000"
       "146".MHz.toString should be === "146.000.000"
@@ -25,7 +25,7 @@ class FrequencySpecs extends FunSpec with ShouldMatchers with BeforeAndAfter {
       new Frequency("14.300.00").Hz should be === 14300000
       new Frequency("14.300.000").Hz should be === 14300000
       new Frequency("146.52").Hz should be === 146520000
-      (10.KHz).Hz should be === 10000
+      (10.kHz).Hz should be === 10000
     }
 
     it("should throw IllegalArgumentException when given letters in any format") {
@@ -48,13 +48,13 @@ class FrequencySpecs extends FunSpec with ShouldMatchers with BeforeAndAfter {
     }
 
     it("should add frequencies together") {
-      ((146.520 MHz) + (10 KHz)).frequency should be === "146.530.000"
-      ((1 MHz) + (10 KHz)).frequency should be === "1.010.000"
+      ((146.520 MHz) + (10 kHz)).frequency should be === "146.530.000"
+      ((1 MHz) + (10 kHz)).frequency should be === "1.010.000"
     }
 
     it("should subtract frequencies from each other") {
-      ((146.520 MHz) - (10 KHz)).frequency should be === "146.510.000"
-      ((1 MHz) - (10 KHz)).frequency should be === "0.990.000"
+      ((146.520 MHz) - (10 kHz)).frequency should be === "146.510.000"
+      ((1 MHz) - (10 kHz)).frequency should be === "0.990.000"
     }
 
     it("should handle conversions from and to hertz and megahertz repeatedly") {

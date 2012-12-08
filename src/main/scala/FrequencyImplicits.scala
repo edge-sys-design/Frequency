@@ -15,7 +15,7 @@ package object FrequencyImplicits {
     def this(frequency: Long) = this(frequency.toDouble)
     def this(frequency: Int) = this(frequency.toDouble)
     def this(frequency: String) = this(Frequency.toHz(frequency) / 1000000.0)
-    def KHz() = new Frequency((frequency * 1000).toLong)
+    def kHz() = new Frequency((frequency * 1000).toLong)
     def MHz() = new Frequency((frequency * 1000000).toLong)
     def Hz() = new Frequency(frequency.toLong)
   }
