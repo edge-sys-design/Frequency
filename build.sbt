@@ -9,5 +9,4 @@ publishTo := Some(
     "ESD Repository",
     "jvmrepo.edgesysdesign.com",
     22,
-    "jvmrepo/"
-) as("buildsys", new File("/home/ricky/buildbot/buildsys_id_rsa"))
+    "jvmrepo/") as("buildsys", new File("/home/ricky/buildbot/buildsys_id_rsa")))
