@@ -1,3 +1,9 @@
+name := "Frequency"
+
+organization := "com.edgesysdesign"
+
+version := "master"
+
 scalaVersion := "2.10.0-RC3"
 
 scalacOptions ++= Seq("-deprecation", "-feature")
