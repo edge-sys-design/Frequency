@@ -7,6 +7,7 @@
   */
 
 package com.edgesysdesign.frequency
+import java.math.MathContext
 
 /** A representation of a RF frequency.
   *
@@ -40,7 +41,7 @@ class Frequency(val frequency: String) {
     * @param frequency The frequency in '''hertz'''.
     * @return Frequency
     */
-  def this(frequency: Long) = this(Frequency.toMHz(frequency))
+  def this(frequency: BigInt) = this(Frequency.toMHz(frequency))
 
   override def toString = frequency
   lazy val Hz = Frequency.toHz(this)
@@ -91,12 +92,19 @@ class Frequency(val frequency: String) {
 object Frequency {
   /** Convert a frequency from Hertz to Megahertz.
     *
-    * @param frequency The frequency in Kilohertz.
+    * @param frequency The frequency in Hertz.
     * @return The frequency in Megahertz, in three segments, separated with '.'.
     */
-  def toMHz(frequency: Long): String = {
+  def toMHz(frequency: BigInt): String = {
     val frequencyStringBuilder = new StringBuilder
-    val split = (frequency.toDouble / 1000000).toString split("\\.")
+    val decString = (BigDecimal(frequency, MathContext.UNLIMITED) / 1000000).toString
+
+    // BigDecimal.toString() doesn't add a ".0" if it's not needed, but we
+    // depend on it being there. When we split, we add it ourself if we need it.
+    // This is a bit of a hack in that we possibly shouldn't be depending on it
+    // being there, but for now it works around the issue.
+    val split = (if (!decString.contains(".")) (decString + ".0") else decString).split("\\.")
+
     frequencyStringBuilder.append(split.head)
     frequencyStringBuilder.append(split.last + ("0" * (6 - split.last.length)))
     frequencyStringBuilder.insert(frequencyStringBuilder.length - 3, ".")
@@ -113,21 +121,17 @@ object Frequency {
     * @param frequency The frequency in Megahertz.
     * @return The frequency in Hertz.
     */
-  def toHz(frequency: String): Long = {
+  def toHz(frequency: String): BigInt = {
     val frequencyStringSplit: List[String] = frequency.split("\\.").toList
-    val frequencySplit: List[Long] = frequencyStringSplit.map(segment =>
+    val frequencySplit: List[BigInt] = frequencyStringSplit.map(segment =>
       segment match {
-        case "" => 0
+        case "" => BigInt(0)
         case x => {
-          if (x.size > 3) {
-            throw new IllegalArgumentException(
-              "Sections of the frequency should be no longer than 3 numbers.")
-          }
           if (!x.forall(_.isDigit)) {
             throw new IllegalArgumentException(
               "The frequency should only contain numbers and decimals.")
           }
-          x.toLong
+          BigInt(x.toString)
         }
       })
 
@@ -151,5 +155,5 @@ object Frequency {
     }
   }
 
-  def toHz(frequency: Frequency): Long = toHz(frequency.frequency)
+  def toHz(frequency: Frequency): BigInt = toHz(frequency.frequency)
 }

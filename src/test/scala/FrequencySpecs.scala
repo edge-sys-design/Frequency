@@ -11,9 +11,13 @@ class FrequencySpecs extends FunSpec with ShouldMatchers with BeforeAndAfter {
       146520.kHz.toString should be === "146.520.000"
       146520000.Hz.toString should be === "146.520.000"
       146.MHz.toString should be === "146.000.000"
+      234.Hz.toString should be === "0.000.234"
       "146".MHz.toString should be === "146.000.000"
       "146.52".MHz.toString should be === "146.520.000"
       "146.520.000".MHz.toString should be === "146.520.000"
+      "2".GHz.toString should be === "2000.000.000"
+      "2".THz.toString should be === "2000000.000.000"
+      "2".PHz.toString should be === "2000000000.000.000"
     }
   }
 
@@ -35,26 +39,23 @@ class FrequencySpecs extends FunSpec with ShouldMatchers with BeforeAndAfter {
       intercept[IllegalArgumentException] { new Frequency("14.3b0.00").Hz  }
     }
 
-    it("should throw IllegalArgumentException when given too big of segments") {
-      intercept[IllegalArgumentException] { new Frequency("14.3000.000").Hz  }
-      intercept[IllegalArgumentException] { new Frequency("14.3000").Hz  }
-      intercept[IllegalArgumentException] { new Frequency("1433.300.a").Hz  }
-    }
-
     it("should convert hertz to megahertz") {
       new Frequency(14325000).frequency should be === "14.325.000"
       Frequency.toMHz(146520000) should be === "146.520.000"
       Frequency.toMHz(1465200) should be === "1.465.200"
+      Frequency.toMHz(234) should be === "0.000.234"
+      Frequency.toMHz(BigInt("9000200000")) should be === "9000.200.000"
+      Frequency.toMHz(BigInt("9000000000")) should be === "9000.000.000"
     }
 
     it("should add frequencies together") {
-      ((146.520 MHz) + (10 kHz)).frequency should be === "146.530.000"
-      ((1 MHz) + (10 kHz)).frequency should be === "1.010.000"
+      ((146.520.MHz) + (10.kHz)).frequency should be === "146.530.000"
+      ((1.MHz) + (10.kHz)).frequency should be === "1.010.000"
     }
 
     it("should subtract frequencies from each other") {
-      ((146.520 MHz) - (10 kHz)).frequency should be === "146.510.000"
-      ((1 MHz) - (10 kHz)).frequency should be === "0.990.000"
+      ((146.520.MHz) - (10.kHz)).frequency should be === "146.510.000"
+      ((1.MHz) - (10.kHz)).frequency should be === "0.990.000"
     }
 
     it("should handle conversions from and to hertz and megahertz repeatedly") {
@@ -65,6 +66,11 @@ class FrequencySpecs extends FunSpec with ShouldMatchers with BeforeAndAfter {
     it("should determine the amateur radio band, given a ham frequency") {
       "146.520".MHz.band should be === Some("2m")
       999.MHz.band should be === None
+    }
+
+    it("should work with huge frequencies") {
+      val freq = new Frequency("3000000000000000000000000.000.000") + 2.kHz
+      freq.frequency should be === "3000000000000000000000000.002.000"
     }
   }
 }

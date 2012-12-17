@@ -8,21 +8,25 @@
 
 package com.edgesysdesign.frequency
 import language.implicitConversions
+import java.math.MathContext
 
 package object FrequencyImplicits {
 
-  class FrequencyImplicit(frequency: Double) {
-    def this(frequency: Long) = this(frequency.toDouble)
-    def this(frequency: Int) = this(frequency.toDouble)
-    def this(frequency: String) = this(Frequency.toHz(frequency) / 1000000.0)
-    def kHz() = new Frequency((frequency * 1000).toLong)
-    def MHz() = new Frequency((frequency * 1000000).toLong)
-    def Hz() = new Frequency(frequency.toLong)
+  class FrequencyImplicit(frequency: BigDecimal) {
+    def this(frequency: BigInt) = this(BigDecimal(frequency, MathContext.UNLIMITED))
+    def this(frequency: String) = this(
+      BigDecimal(Frequency.toHz(frequency), MathContext.UNLIMITED) / 1000000)
+
+    // Keep these in order of magnitude.
+    def Hz() = new Frequency(BigInt(frequency.toLong))
+    def kHz() = new Frequency(BigInt((frequency * 1E3).toLong))
+    def MHz() = new Frequency(BigInt((frequency * 1E6).toLong))
+    def GHz() = new Frequency(BigInt((frequency * 1E9).toLong))
+    def THz() = new Frequency(BigInt((frequency * 1E12).toLong))
+    def PHz() = new Frequency(BigInt((frequency * 1E15).toLong))
   }
 
   implicit def doubleToFrequency(frequency: Double) = new FrequencyImplicit(frequency)
-  implicit def intToFrequency(frequency: Int) = new FrequencyImplicit(frequency)
-  implicit def LongToFrequency(frequency: Long) = new FrequencyImplicit(frequency)
+  implicit def LongToFrequency(frequency: BigInt) = new FrequencyImplicit(frequency)
   implicit def StringToFrequency(frequency: String) = new FrequencyImplicit(frequency)
-
 }
