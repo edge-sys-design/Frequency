@@ -34,7 +34,7 @@ import java.math.MathContext
   * // etc.
   * }}}
   */
-class Frequency(val frequency: String) {
+class Frequency(val frequency: String) extends Ordered[Frequency] {
 
   /** Construct a Frequency, given Hertz.
     *
@@ -46,6 +46,12 @@ class Frequency(val frequency: String) {
   override def toString = frequency
   lazy val Hz = Frequency.toHz(this)
   lazy val MHz = Frequency.toMHz(this)
+
+  /** Compares two Frequency objects. */
+  def compare(that: Frequency) = this.Hz compare that.Hz
+
+  /** Determines if the value of two Frequency objects are the same. */
+  def ==(that: Frequency) = this.Hz == that.Hz
 
   /** Add two Frequency instances, returning a new Frequency. */
   def +(that: Frequency) = new Frequency(Hz + that.Hz)

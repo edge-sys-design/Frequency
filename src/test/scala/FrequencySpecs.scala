@@ -72,5 +72,12 @@ class FrequencySpecs extends FunSpec with ShouldMatchers with BeforeAndAfter {
       val freq = new Frequency("3000000000000000000000000.000.000") + 2.kHz
       freq.frequency should be === "3000000000000000000000000.002.000"
     }
+
+    it("should compare two Frequency objects") {
+      "146.520".MHz > "146.530".MHz should be === false
+      "1.520".MHz < "1.530".MHz should be === true
+      "146.520".MHz == "146.520".MHz should be === true
+      "146.500".MHz == "146.530".MHz should be === false
+    }
   }
 }
