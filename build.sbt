@@ -4,7 +4,7 @@ organization := "com.edgesysdesign"
 
 version := "master"
 
-scalaVersion := "2.10.0-RC3"
+scalaVersion := "2.10.0"
 
 scalacOptions ++= Seq("-deprecation", "-feature")
 
