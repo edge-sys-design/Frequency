@@ -1,5 +1,6 @@
 import com.edgesysdesign.frequency.Frequency
 import com.edgesysdesign.frequency.FrequencyImplicits._
+import com.edgesysdesign.frequency.HamFrequency
 
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FunSpec
@@ -64,8 +65,8 @@ class FrequencySpecs extends FunSpec with ShouldMatchers with BeforeAndAfter {
     }
 
     it("should determine the amateur radio band, given a ham frequency") {
-      "146.520".MHz.band should be === Some("2m")
-      999.MHz.band should be === None
+      HamFrequency("146.520".MHz).band should be === Some("2m")
+      HamFrequency(999.MHz).band should be === None
     }
 
     it("should work with huge frequencies") {
@@ -78,6 +79,10 @@ class FrequencySpecs extends FunSpec with ShouldMatchers with BeforeAndAfter {
       "1.520".MHz < "1.530".MHz should be === true
       "146.520".MHz == "146.520".MHz should be === true
       "146.500".MHz == "146.530".MHz should be === false
+    }
+
+    it("should calculate the wavelength of a given frequency") {
+      "146.520".MHz.wavelength.toDouble should be === 2.046085571935572
     }
   }
 }

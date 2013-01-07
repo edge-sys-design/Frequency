@@ -58,6 +58,9 @@ class Frequency(val frequency: String) extends Ordered[Frequency] {
 
   /** Subtract two Frequency instances, returning a new Frequency. */
   def -(that: Frequency) = new Frequency(Hz - that.Hz)
+
+  /** Calculate the wavelength of this Frequency instance. */
+  def wavelength() = 299792458 / BigDecimal(this.Hz)
 }
 
 object Frequency {
