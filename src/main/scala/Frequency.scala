@@ -59,6 +59,9 @@ class Frequency(val frequency: String) extends Ordered[Frequency] {
   /** Subtract two Frequency instances, returning a new Frequency. */
   def -(that: Frequency) = new Frequency(Hz - that.Hz)
 
+  /** Allow negative-string frequencies. */
+  def unary_- = new Frequency(-1 * this.Hz)
+
   /** Calculate the wavelength of this Frequency instance. */
   def wavelength() = 299792458 / BigDecimal(this.Hz)
 }
@@ -100,16 +103,12 @@ object Frequency {
     val frequencySplit: List[BigInt] = frequencyStringSplit.map(segment =>
       segment match {
         case "" => BigInt(0)
-        case x => {
-          if (!x.forall(_.isDigit)) {
-            throw new IllegalArgumentException(
-              "The frequency should only contain numbers and decimals.")
-          }
-          BigInt(x.toString)
-        }
+        case x => BigInt(x.toString)
       })
 
-    frequencySplit.size match {
+    val sign = if (frequency.startsWith("-")) -1 else 1
+
+    val hertz = frequencySplit.size match {
       case 1 => frequencySplit.head * 1000000
       case 2 => {
         (frequencySplit.head * 1000000) +
@@ -127,6 +126,8 @@ object Frequency {
           3 - (frequencyStringSplit(2).toString.size)).toLong)
       }
     }
+
+    hertz * sign
   }
 
   def toHz(frequency: Frequency): BigInt = toHz(frequency.frequency)

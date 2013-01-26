@@ -84,5 +84,10 @@ class FrequencySpecs extends FunSpec with ShouldMatchers with BeforeAndAfter {
     it("should calculate the wavelength of a given frequency") {
       "146.520".MHz.wavelength.toDouble should be === 2.046085571935572
     }
+
+    it("should handle negative .toHz() calls") {
+      Frequency.toHz("-0.020.000") should be === BigInt(-20000)
+      -"146.200.000".MHz.Hz should be === -146200000
+    }
   }
 }
