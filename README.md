@@ -13,7 +13,7 @@ general.
 
 ```scala
 import language.postfixOps
-val callingFrequency = 146.52 MHz
+val callingFrequency = HamFrequency(146.52 MHz)
 callingFrequency.band // => Some(2m)
 ```
 
